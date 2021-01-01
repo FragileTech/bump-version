@@ -1,0 +1,40 @@
+name: bump-version
+description: Increment the version in one or several files using bump2version, commit, tag, and push the change. The operation can be fine-tuned in `.bumpversion.cfg`, see `bumpversion --help` for the details.
+author: Fragile Tech
+inputs:
+  files:
+    description: List of files in which to bump the version.
+    required: true
+  commit_name:
+    description: Name of the identity that is used in the commit's author signature.
+    required: true
+  commit_email:
+    description: Email of the identity that is used in the commit's author signature.
+    required: true
+  login:
+    description: GitHub user name of the identity. `bump-version` uses it together with `token` to push to the repository.
+  token:
+    description: GitHub personal access token of the identity. `bump-version` uses it together with `login` to push to the repository.
+    required: true
+  part:
+    description: Part of the semantic version to bump.
+    required: false
+    default: patch
+runs:
+  using: "docker"
+  image: "docker://python:3.9-buster"
+  args:
+    - set -x
+    - git config --global user.name "$commit_name"
+    - git config --global user.email "$commit_email"
+    - git config --global pull.rebase false
+    - BRANCH=${GITHUB_REF#refs/heads/}
+    - pip install --no-cache-dir bump2version
+    - git remote add $login https://$login:$token@github.com/$GITHUB_REPOSITORY
+    - git pull --no-edit $login $BRANCH
+    - for file in $files; do bumpversion --current-version $current_version $part $file; done
+    - bumpversion --tag --current-version $current_version --commit --allow-dirty --commit-args="-a"
+    - git push --tags $login HEAD:$BRANCH
+branding:
+  color: purple
+  icon: bar-chart-2

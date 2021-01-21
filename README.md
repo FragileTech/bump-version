@@ -1,4 +1,4 @@
-# bump-version
+# bump2version-action
 
 GitHub Action to increment the project's version using [bump2version](https://github.com/c4urself/bump2version), commit, tag, and push the change. This operation can be fine-tuned in `.bumpversion.cfg`, see `bumpversion --help` for the details.
 

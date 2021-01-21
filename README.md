@@ -31,6 +31,8 @@ jobs:
     steps:
     - name: actions/checkout
       uses: actions/checkout@v2
+      with:
+          persist-credentials: false
     - name: current_version
       run: echo "current_version=$(grep '# version' version.md | cut -d ' ' -f3)" >> $GITHUB_ENV
     - name: FragileTech/bump-version

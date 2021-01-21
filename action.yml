@@ -1,6 +1,6 @@
 name: bump2version-action
 description: Increment the version in one or several files using bump2version, commit, tag, and push the change.
-# version: 1.0.3
+# version: 1.0.4
 author: Fragile Tech
 inputs:
   current_version:

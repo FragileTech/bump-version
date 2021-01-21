@@ -1,5 +1,5 @@
-name: bump-version
-description: Increment the version in one or several files using bump2version, commit, tag, and push the change. The operation can be fine-tuned in `.bumpversion.cfg`, see `bumpversion --help` for the details.
+name: bump2version
+description: Increment the version in one or several files using bump2version, commit, tag, and push the change.
 # version: 1.0.2
 author: Fragile Tech
 inputs:

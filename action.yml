@@ -37,8 +37,10 @@ runs:
       pip install --no-cache-dir bump2version
       git remote add ${{ inputs.login }} https://${{ inputs.login }}:${{ inputs.token }}@github.com/$GITHUB_REPOSITORY
       git pull --no-edit ${{ inputs.login }} $BRANCH
+      git config --global url."https://${{ inputs.login }}:${{ inputs.token }}@github.com/".insteadOf "https://github.com/"
       # merge done by git pull does not update submodules changed in $BRANCH
       git submodule update --init --recursive
+      git config --global --remove-section url
       git diff
       for file in ${{ inputs.files }}; do ~/.local/bin/bumpversion --allow-dirty --current-version ${{ inputs.current_version }} ${{ inputs.part }} $file; done
       git diff
